@@ -1,28 +1,16 @@
-//
-//  Calculator.swift
-//  calc
-//
-//  Evaluates arithmetic expressions with correct operator precedence.
-//
-
 import Foundation
 
 class Calculator {
 
-    /// Evaluates a sequence of command-line arguments as an arithmetic expression.
     func calculate(args: [String]) throws -> Int {
         let expression = try Expression(args: args)
         return try evaluate(numbers: expression.numbers, operators: expression.operators)
     }
 
-    /// Evaluates the expression using two-pass precedence:
-    /// 1. Evaluate x, /, % (left to right)
-    /// 2. Evaluate +, - (left to right)
     private func evaluate(numbers: [Int], operators: [String]) throws -> Int {
         var nums = numbers
         var ops = operators
 
-        // First pass: high-precedence operators (x, /, %)
         var i = 0
         while i < ops.count {
             if ops[i] == "x" || ops[i] == "/" || ops[i] == "%" {
@@ -35,7 +23,6 @@ class Calculator {
             }
         }
 
-        // Second pass: low-precedence operators (+, -)
         var result = nums[0]
         for i in 0..<ops.count {
             result = try performOperation(lhs: result, op: ops[i], rhs: nums[i + 1])
@@ -44,7 +31,6 @@ class Calculator {
         return result
     }
 
-    /// Performs a single arithmetic operation with overflow and division-by-zero checking.
     private func performOperation(lhs: Int, op: String, rhs: Int) throws -> Int {
         switch op {
         case "+":

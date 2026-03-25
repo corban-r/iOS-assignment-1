@@ -1,14 +1,7 @@
-//
-//  main.swift
-//  calc
-//
-//  Entry point for the command-line calculator.
-//
-
 import Foundation
 
 var args = ProcessInfo.processInfo.arguments
-args.removeFirst() // remove the program name
+args.removeFirst()
 
 let calculator = Calculator()
 
